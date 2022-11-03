@@ -6,6 +6,7 @@
 </head>
 <body>
 <form th:method="POST" th:action="@{/people}" th:object="${person}">
+
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
@@ -21,7 +22,13 @@
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <br/>
 
+    <label for="address">Enter address: </label>
+    <input type="text" th:field="*{address}" id="address"/>
+    <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</div>
+    <br/>
+
     <input type="submit" value="Create!"/>
+
 </form>
 
 </body>

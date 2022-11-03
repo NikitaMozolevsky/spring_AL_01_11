@@ -1,9 +1,6 @@
 package com.nikita.lessons.models;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class Person {
     private int id;
@@ -19,13 +16,19 @@ public class Person {
     @Email(message = "email should be valid")
     private String email;
 
+    /**Address Structure: Country, City, Person Post Index (6 numbers)*/
+    @Pattern(regexp = "[A-Z]\\w{2,50}, [A-Z]\\w{2,50}, \\d{6}", message = "Your address should be in this format:" +
+            "Country, City, Post index (6 digits)")
+    private String address;
+
     public Person() {}
 
-    public Person(int id, String name, int age, String email) {
+    public Person(int id, String name, int age, String email, String address) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
+        this.address = address;
     }
 
     public int getId() {
@@ -60,6 +63,14 @@ public class Person {
         this.email = email;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,13 +79,19 @@ public class Person {
         Person person = (Person) o;
 
         if (id != person.id) return false;
-        return name != null ? name.equals(person.name) : person.name == null;
+        if (age != person.age) return false;
+        if (name != null ? !name.equals(person.name) : person.name != null) return false;
+        if (email != null ? !email.equals(person.email) : person.email != null) return false;
+        return address != null ? address.equals(person.address) : person.address == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + age;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }
 }
